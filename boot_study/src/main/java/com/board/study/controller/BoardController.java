@@ -29,6 +29,7 @@ public class BoardController {
         return "board/list.html";
     }
 	
+	//write 페이지로 이동
 	@GetMapping("/post")
 	public String write() {
         return "board/write.html";
@@ -60,7 +61,7 @@ public class BoardController {
     @PutMapping("/post/edit/{no}")
     public String update(BoardDto boardDTO) {
         boardService.savePost(boardDTO);
-
+        
         return "redirect:/";
     }
 
