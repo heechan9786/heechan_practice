@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form th:action="@{'/post/edit/' + ${boardDto.ID}}" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="ID" th:value="${boardDto.ID}"/>
+
+    제목 : <input type="text" name="TITLE" th:value="${boardDto.TITLE}"> <br>
+    작성자 : <input type="text" name="REG_ID" th:value="${boardDto.REG_ID}"> <br>
+    <textarea name="CONTENT" th:text="${boardDto.CONTENT}"></textarea><br>
+
+    <input type="submit" value="수정">
+</form>
+</body>
+</html>
