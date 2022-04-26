@@ -21,6 +21,7 @@ public class BoardController {
 	
 	private BoardService boardService;
 	
+	//list페이지로 이동
 	@GetMapping("/")
     public String list(Model model) {
 		List<BoardDto> boardList = boardService.getBoardlist();
@@ -35,6 +36,7 @@ public class BoardController {
         return "board/write.html";
     }
 	
+	//write 실행
 	@PostMapping("/post")
     public String write(BoardDto boardDto) {
         boardService.savePost(boardDto);
