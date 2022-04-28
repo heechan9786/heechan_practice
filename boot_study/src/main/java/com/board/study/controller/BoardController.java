@@ -27,13 +27,13 @@ public class BoardController {
 		List<BoardDto> boardList = boardService.getBoardlist();
 		model.addAttribute("boardList", boardList);
 		
-        return "board/list.html";
+        return "board/list";
     }
 	
 	//write 페이지로 이동
 	@GetMapping("/post")
 	public String write() {
-        return "board/write.html";
+        return "board/write";
     }
 	
 	//write 실행
@@ -49,7 +49,7 @@ public class BoardController {
         BoardDto boardDTO = boardService.getPost(no);
 
         model.addAttribute("boardDto", boardDTO);
-        return "board/detail.html";
+        return "board/detail";
     }
 
     @GetMapping("/post/edit/{no}")
@@ -57,7 +57,7 @@ public class BoardController {
         BoardDto boardDTO = boardService.getPost(no);
 
         model.addAttribute("boardDto", boardDTO);
-        return "board/update.html";
+        return "board/update";
     }
 
     @PutMapping("/post/edit/{no}")
