@@ -8,8 +8,6 @@
 </head>
 <body>
 	<h2>${boardDto.TITLE}</h2>
-	<p>작성일 : ${board.REG_DATE}</p>
-	
 	<p>${boardDto.CONTENT}</p>
 	
 	<!-- 수정/삭제 -->
