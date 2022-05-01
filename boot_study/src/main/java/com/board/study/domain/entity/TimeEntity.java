@@ -1,6 +1,7 @@
 package com.board.study.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -18,8 +19,8 @@ import lombok.Getter;
 public abstract class TimeEntity {
 	@CreatedDate
     @Column(updatable = false)
-    private LocalDateTime REG_DATE;
+    private Date REG_DATE;
 
     @LastModifiedDate
-    private LocalDateTime MOD_DATE;
+    private Date MOD_DATE;
 }

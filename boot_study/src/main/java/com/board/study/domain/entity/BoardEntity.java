@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "board")
-public class BoardEntity extends TimeEntity {
+public class BoardEntity {
 
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

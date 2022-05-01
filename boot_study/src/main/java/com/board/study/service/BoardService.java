@@ -1,68 +1,35 @@
 package com.board.study.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.board.study.domain.entity.BoardEntity;
-import com.board.study.domain.repository.BoardRepository;
 import com.board.study.dto.BoardDto;
+import com.board.study.mapper.BoardMapper;
 
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Service
 public class BoardService {
 	
-	private BoardRepository boardRepository;
+	@Autowired
+	private BoardMapper boardMapper;
 	
-	@Transactional
-    public Long savePost(BoardDto boardDto) {
-        return boardRepository.save(boardDto.toEntity()).getID();
+    public void savePost(BoardDto boardDTO) {
+        boardMapper.saveBoard(boardDTO);
     }
 	
-	@Transactional
     public List<BoardDto> getBoardlist() {
-        List<BoardEntity> boardEntities = boardRepository.findAll();
-        List<BoardDto> boardDtoList = new ArrayList<>();
-
-        for ( BoardEntity boardEntity : boardEntities) {
-            BoardDto boardDTO = BoardDto.builder()
-                    .ID(boardEntity.getID())
-                    .TITLE(boardEntity.getTITLE())
-                    .CONTENT(boardEntity.getCONTENT())
-                    .REG_ID(boardEntity.getREG_ID())
-                    .REG_DATE(boardEntity.getREG_DATE())
-                    .build();
-
-            boardDtoList.add(boardDTO);
-        }
-
-        return boardDtoList;
+        return boardMapper.selectBoard();
     }
 	
-	@Transactional
-    public BoardDto getPost(Long id) {
-        Optional<BoardEntity> boardEntityWrapper = boardRepository.findById(id);
-        BoardEntity boardEntity = boardEntityWrapper.get();
-
-        BoardDto boardDTO = BoardDto.builder()
-                .ID(boardEntity.getID())
-                .TITLE(boardEntity.getTITLE())
-                .CONTENT(boardEntity.getCONTENT())
-                .REG_ID(boardEntity.getREG_ID())
-                .REG_DATE(boardEntity.getREG_DATE())
-                .build();
-
-        return boardDTO;
+    public BoardDto getPost(int id) {
+        return boardMapper.findById(id);
     }
 
-    @Transactional
-    public void deletePost(Long id) {
-        boardRepository.deleteById(id);
-    }
+	public void updateBoard(BoardDto boardDTO, int no) {
+		boardMapper.updateBoard(boardDTO);
+	}
+
+	public void deleteBoard(int id) {
+		boardMapper.deleteBoard(id);
+	}
 }

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +8,7 @@
 </head>
 <body>
 	<h2>${boardDto.TITLE}</h2>
-	<fmt:formatDate var="reg_dt" value="${board.REG_DATE}" pattern="yyyy-MM-dd HH:mm"/>
-	
-	<p>작성일 : ${reg_dt }</p>
+	<p>작성일 : ${board.REG_DATE}</p>
 	
 	<p>${boardDto.CONTENT}</p>
 	

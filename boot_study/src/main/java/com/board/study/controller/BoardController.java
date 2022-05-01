@@ -2,75 +2,96 @@ package com.board.study.controller;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import com.board.study.dto.BoardDto;
 import com.board.study.service.BoardService;
 
-import lombok.AllArgsConstructor;
-
-@Controller
-@AllArgsConstructor
+@RestController
 public class BoardController {
 	
+	@Autowired
 	private BoardService boardService;
 	
 	//list페이지로 이동
 	@GetMapping("/")
-    public String list(Model model) {
+    public ModelAndView list() {
+		ModelAndView mav = new ModelAndView("board/list");
 		List<BoardDto> boardList = boardService.getBoardlist();
-		model.addAttribute("boardList", boardList);
 		
-        return "board/list";
+//		model.addAttribute("boardList", boardList);
+		mav.addObject("boardList", boardList);
+        return mav;
     }
 	
 	//write 페이지로 이동
 	@GetMapping("/post")
-	public String write() {
-        return "board/write";
+	public ModelAndView write() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/write");
+        return mav;
     }
 	
 	//write 실행
 	@PostMapping("/post")
-    public String write(BoardDto boardDto) {
+    public ModelAndView write(BoardDto boardDto) {
+		ModelAndView mav = new ModelAndView();
+		
         boardService.savePost(boardDto);
-
-        return "redirect:/";
+        
+        mav.setViewName("redirect:/");
+        return mav;
     }
 	
 	@GetMapping("/post/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    public ModelAndView detail(@PathVariable("no") int no) {
+		ModelAndView mav = new ModelAndView();
+		
         BoardDto boardDTO = boardService.getPost(no);
 
-        model.addAttribute("boardDto", boardDTO);
-        return "board/detail";
+        mav.addObject("boardDto", boardDTO);
+        mav.setViewName("board/detail");
+        
+        return mav;
     }
 
     @GetMapping("/post/edit/{no}")
-    public String edit(@PathVariable("no") Long no, Model model) {
+    public ModelAndView edit(@PathVariable("no") int no) {
+    	ModelAndView mav = new ModelAndView();
+    	
         BoardDto boardDTO = boardService.getPost(no);
 
-        model.addAttribute("boardDto", boardDTO);
-        return "board/update";
+        mav.addObject("boardDto", boardDTO);
+        mav.setViewName("board/update");
+        
+        return mav;
     }
 
     @PutMapping("/post/edit/{no}")
-    public String update(BoardDto boardDTO) {
-        boardService.savePost(boardDTO);
+    public ModelAndView update(BoardDto boardDTO, @PathVariable("no") int no) {
+    	ModelAndView mav = new ModelAndView();
+    	
+        boardService.updateBoard(boardDTO, no);
         
-        return "redirect:/";
+        mav.setViewName("redirect:/");
+        
+        return mav;
     }
 
     @DeleteMapping("/post/{no}")
-    public String delete(@PathVariable("no") Long no) {
-        boardService.deletePost(no);
+    public ModelAndView delete(@PathVariable("no") int no) {
+    	ModelAndView mav = new ModelAndView();
+    	
+        boardService.deleteBoard(no);
+        
+        mav.setViewName("redirect:/");
 
-        return "redirect:/";
+        return mav;
     }
 }

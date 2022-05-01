@@ -1,9 +1,5 @@
 package com.board.study.dto;
 
-import java.time.LocalDateTime;
-
-import com.board.study.domain.entity.BoardEntity;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +11,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class BoardDto {
-	private Long ID;
+	private int ID;
     private String TITLE;
     private String CONTENT;
     private String REG_ID;
-    private LocalDateTime REG_DATE;
-    private LocalDateTime MOD_DATE;
     
+    /*
     public BoardEntity toEntity() {
     	BoardEntity boardEntity = BoardEntity.builder()
 	    	.ID(ID)
@@ -30,17 +25,14 @@ public class BoardDto {
 	    	.REG_ID(REG_ID)
 	    	.build();
     	return boardEntity;
-    }
+    }*/
     
     @Builder
-	public BoardDto(Long ID, String TITLE, String CONTENT, String REG_ID, LocalDateTime REG_DATE,
-			LocalDateTime MOD_DATE) {
+	public BoardDto(int ID, String TITLE, String CONTENT, String REG_ID) {
 		this.ID = ID;
 		this.TITLE = TITLE;
 		this.CONTENT = CONTENT;
 		this.REG_ID = REG_ID;
-		this.REG_DATE = REG_DATE;
-		this.MOD_DATE = MOD_DATE;
 	}
     
     
