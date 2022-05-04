@@ -32,6 +32,6 @@
     	DELETE FROM
     		board
     	WHERE
-    		id=#{ID}
+    		id=#{id}
     </delete>
 </mapper>

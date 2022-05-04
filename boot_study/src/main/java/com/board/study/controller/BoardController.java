@@ -1,6 +1,10 @@
 package com.board.study.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.board.study.dto.BoardDto;
@@ -25,7 +30,6 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView("board/list");
 		List<BoardDto> boardList = boardService.getBoardlist();
 		
-//		model.addAttribute("boardList", boardList);
 		mav.addObject("boardList", boardList);
         return mav;
     }
@@ -40,10 +44,10 @@ public class BoardController {
 	
 	//write 실행
 	@PostMapping("/post")
-    public ModelAndView write(BoardDto boardDto) {
+    public ModelAndView write(BoardDto boardDTO) {
 		ModelAndView mav = new ModelAndView();
-		
-        boardService.savePost(boardDto);
+
+        boardService.savePost(boardDTO);
         
         mav.setViewName("redirect:/");
         return mav;
@@ -55,43 +59,49 @@ public class BoardController {
 		
         BoardDto boardDTO = boardService.getPost(no);
 
+        
         mav.addObject("boardDto", boardDTO);
         mav.setViewName("board/detail");
         
         return mav;
     }
 
-    @GetMapping("/post/edit/{no}")
-    public ModelAndView edit(@PathVariable("no") int no) {
+    @GetMapping("/go_edit/{id}")
+    public ModelAndView edit(@PathVariable("id") int id) {
     	ModelAndView mav = new ModelAndView();
     	
-        BoardDto boardDTO = boardService.getPost(no);
+        BoardDto boardDTO = boardService.getPost(id);
 
+        boardDTO.setCONTENT(boardDTO.getCONTENT().replace("\r\n","<br>"));
+        
         mav.addObject("boardDto", boardDTO);
         mav.setViewName("board/update");
         
         return mav;
     }
 
-    @PutMapping("/post/edit/{no}")
-    public ModelAndView update(BoardDto boardDTO, @PathVariable("no") int no) {
-    	ModelAndView mav = new ModelAndView();
+    @PutMapping("/editBoard")
+    public Map<Object, Object> update(BoardDto boardDTO) {
+    	Map<Object, Object> resultMap = new HashMap<Object, Object>();
     	
-        boardService.updateBoard(boardDTO, no);
+        boardService.updateBoard(boardDTO);
         
-        mav.setViewName("redirect:/");
+        resultMap.put("RESULT", "SUCCESS");
         
-        return mav;
+        return resultMap;
     }
 
-    @DeleteMapping("/post/{no}")
-    public ModelAndView delete(@PathVariable("no") int no) {
-    	ModelAndView mav = new ModelAndView();
+    @DeleteMapping("/deleteBoard")
+    public Map<Object, Object> delete(@RequestParam(value="checkArr[]") List<Integer> checkArr) {
+    	Map<Object, Object> resultMap = new HashMap<Object, Object>();
     	
-        boardService.deleteBoard(no);
+    	for(int id : checkArr) {
+    		System.out.println(id+"번 게시글 삭제");
+    		boardService.deleteBoard(id);
+    	}
+    	
+        resultMap.put("RESULT", "SUCCESS");
         
-        mav.setViewName("redirect:/");
-
-        return mav;
+        return resultMap;
     }
 }

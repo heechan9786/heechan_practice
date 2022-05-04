@@ -25,7 +25,7 @@ public class BoardService {
         return boardMapper.findById(id);
     }
 
-	public void updateBoard(BoardDto boardDTO, int no) {
+	public void updateBoard(BoardDto boardDTO) {
 		boardMapper.updateBoard(boardDTO);
 	}
 

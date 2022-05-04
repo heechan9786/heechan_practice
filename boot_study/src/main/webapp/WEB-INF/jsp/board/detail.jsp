@@ -1,25 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h2>${boardDto.TITLE}</h2>
-	<p>${boardDto.CONTENT}</p>
+
+<script type="text/javascript">
+	function go_update(){
+		location.href="/go_edit/"+$("#id").val();
+	}
 	
+	
+</script>
+<div class="container">
+	<input type="hidden" name="id" id="id" value="${boardDto.ID}"/>
+	<table class="table table-bordered">
+		<tr>
+			<th class="bg-info">제목</th>
+			<td>${boardDto.TITLE}</td>
+		</tr>
+		<tr>
+			<th class="bg-info">작성자</th>
+			<td>${boardDto.REG_ID}</td>
+		</tr>
+		<tr>
+			<th colspan="2" class="bg-info">내용</th>
+			
+		</tr>
+		<tr>
+			<td colspan="2">
+				<span style="white-space: pre-line;">${boardDto.CONTENT }</span>
+			</td>
+		</tr>
+	</table>
 	<!-- 수정/삭제 -->
 	<div>
-	    <a href="/post/edit/${boardDto.ID}">
-	        <button>수정</button>
-	    </a>
-	
-	    <form id="delete-form" action="/post/${boardDto.ID}" method="post">
-	        <input type="hidden" name="_method" value="delete"/>
-	        <button id="delete-btn">삭제</button>
-	    </form>
+		<input type="button" class="btn btn-outline-info" onclick="go_update()" value="수정">
 	</div>
-</body>
-</html>
+</div>
