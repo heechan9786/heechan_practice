@@ -46,8 +46,4 @@
 	<div>
 		<input type="button" class="btn btn-outline-secondary btn-lg btn-block" onclick="save()" value="등록">
 	</div>
-	<form  action="/post" method="post">
-		
-        <input type="submit" value="등록">
-	</form>
 </div>

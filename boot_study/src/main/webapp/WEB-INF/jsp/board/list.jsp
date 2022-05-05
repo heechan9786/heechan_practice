@@ -36,7 +36,7 @@
 			},
 			error:function(result){
 				console.log(result);
-				alert("게시글 수정에 실패하셨습니다.");
+				alert("게시글 삭제에 실패하였습니다.");
 				return;
 			}
 		});
